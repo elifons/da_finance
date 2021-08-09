@@ -101,7 +101,7 @@ def create_dataset(df_, sp, dest_dir):
     # return train_x, train_y, test_x, test_y
     
 def process_dataset(dest_dir):
-    df = pd.read_csv('full_df_stocks.csv', index_col='smDate', parse_dates=True)
+    df = pd.read_csv('raw_data/example_data.csv', index_col='smDate', parse_dates=True)
     j = 0
     count = 0
     while count+1000 < len(df):
