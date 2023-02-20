@@ -4,13 +4,15 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import torch
 import os.path as op
+import os
 from torch.utils.data import TensorDataset, DataLoader
 
+run_path = os.path.dirname(os.getcwd()) # 'experiment directory'
 
 def build_dataloader(x_data, y_data, batch_size, shuffle=True):
-        train_data = TensorDataset(torch.from_numpy(x_data).float(), torch.from_numpy(y_data))
-        train_loader = DataLoader(train_data, shuffle=shuffle, batch_size=batch_size, drop_last=False)
-        return train_loader
+    train_data = TensorDataset(torch.from_numpy(x_data).float(), torch.from_numpy(y_data))
+    train_loader = DataLoader(train_data, shuffle=shuffle, batch_size=batch_size, drop_last=False)
+    return train_loader
 
 
 def epoch_trainer(model, train_loader, optimizer, criterion, logger, device):
@@ -78,7 +80,7 @@ def create_probs_dataframe(cols, dates, index_list, probs):
 def evaluate_model(model, path, i_sp, device):
     pred_list, label_list = [], []
     probs0, probs1 = [], []
-    data_dir = 'data'
+    data_dir = run_path + '\\data'
     test_x = np.load(op.join(data_dir, 'study_period_X_'+str(i_sp)+'_test.npy'))
     test_y = np.load(op.join(data_dir, 'study_period_Y_'+str(i_sp)+'_test.npy'))
     test_loader = build_dataloader(test_x, test_y, batch_size=5000, shuffle=False)
